@@ -19,11 +19,11 @@ if dcsLiberation then
     -- retrieve specific options values
     if dcsLiberation.plugins then
     
-        if dcsLiberation.plugins.jtacautolase then
+        if dcsLiberation.plugins.veaf then
     
-            allowSpawn = dcsLiberation.plugins.jtacautolase.allowSpawn
-            allowAssetRespawn = dcsLiberation.plugins.jtacautolase.allowAssetRespawn
-            allowCTLD = dcsLiberation.plugins.jtacautolase.allowCTLD
+            allowSpawn = dcsLiberation.plugins.veaf.allowSpawn
+            allowAssetRespawn = dcsLiberation.plugins.veaf.allowAssetRespawn
+            allowCTLD = dcsLiberation.plugins.veaf.allowCTLD
         end
     end
     
