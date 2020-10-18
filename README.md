@@ -20,11 +20,11 @@ Could not be simpler :
 
 In the *Settings* window, you'll see an option to select this new plugin in the *LUA Plugins* section :
 
-![VEAF Plugin](doc\0.png "VEAF Plugin")
+![VEAF Plugin](0.png "VEAF Plugin")
 
 Also, you can change the default options in the *LUA Plugins Options* section :
 
-![VEAF Plugin Options](doc\1.png "VEAF Plugin Options")
+![VEAF Plugin Options](1.png "VEAF Plugin Options")
 
 These options are :
 
