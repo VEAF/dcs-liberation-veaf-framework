@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dcs-liberation-veaf-framework.git"
+    "url": "git+https://github.com/veaf/dcs-liberation-veaf-framework.git"
   },
   "dependencies": {
     "veaf-mission-creation-tools": "2.22.1"
