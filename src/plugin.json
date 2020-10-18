@@ -1,0 +1,127 @@
+{
+    "mnemonic": "veaf",
+    "nameInUI": "VEAF Framework",
+    "defaultValue": false,
+    "specificOptions": [
+        {
+            "nameInUI": "Allow spawn commands",
+            "mnemonic": "allowSpawn",
+            "defaultValue": false
+        },
+        {
+            "nameInUI": "Allow assets respawn",
+            "mnemonic": "allowAssetRespawn",
+            "defaultValue": false
+        },
+        {
+            "nameInUI": "Allow CTLD transport missions",
+            "mnemonic": "allowCTLD",
+            "defaultValue": false
+        }
+    ],
+    "scriptsWorkOrders": [
+        {
+            "file"    : "bypass JTACAutoLase",
+            "mnemonic": "jtacautolase-script",
+            "disable" : true
+        },
+        {
+            "file":     "mist.lua",
+            "mnemonic": "mist"
+        },
+        {
+            "file":     "Moose.lua",
+            "mnemonic": "moose"
+        },
+        {
+            "file":     "CTLD.lua",
+            "mnemonic": "ctld"
+        },
+        {
+            "file":     "WeatherMark.lua",
+            "mnemonic": "weathermark"
+        },
+        {
+            "file":     "veaf.lua",
+            "mnemonic": "veaf"
+        },
+        {
+            "file":     "dcsUnits.lua",
+            "mnemonic": "dcsunits"
+        },
+        {
+            "file":     "veafAssets.lua",
+            "mnemonic": "veafassets"
+        },
+        {
+            "file":     "veafCarrierOperations.lua",
+            "mnemonic": "veafcarrieroperations"
+        },
+        {
+            "file":     "veafCasMission.lua",
+            "mnemonic": "veafcasmission"
+        },
+        {
+            "file":     "veafCombatMission.lua",
+            "mnemonic": "veafcombatmission"
+        },
+        {
+            "file":     "veafCombatZone.lua",
+            "mnemonic": "veafcombatzone"
+        },
+        {
+            "file":     "veafGrass.lua",
+            "mnemonic": "veafgrass"
+        },
+        {
+            "file":     "veafInterpreter.lua",
+            "mnemonic": "veafinterpreter"
+        },
+        {
+            "file":     "veafMarkers.lua",
+            "mnemonic": "veafmarkers"
+        },
+        {
+            "file":     "veafMove.lua",
+            "mnemonic": "veafmove"
+        },
+        {
+            "file":     "veafNamedPoints.lua",
+            "mnemonic": "veafnamedpoints"
+        },
+        {
+            "file":     "veafRadio.lua",
+            "mnemonic": "veafradio"
+        },
+        {
+            "file":     "veafRemote.lua",
+            "mnemonic": "veafremote"
+        },
+        {
+            "file":     "veafSecurity.lua",
+            "mnemonic": "veafsecurity"
+        },
+        {
+            "file":     "veafShortcuts.lua",
+            "mnemonic": "veafshortcuts"
+        },
+        {
+            "file":     "veafSpawn.lua",
+            "mnemonic": "veafspawn"
+        },
+        {
+            "file":     "veafTransportMission.lua",
+            "mnemonic": "veaftransportmission"
+        },
+        {
+            "file":     "veafUnits.lua",
+            "mnemonic": "veafunits"
+        }
+    ],
+    "configurationWorkOrders": [
+        {
+            "file": "veaf-config.lua",
+            "mnemonic": "veaf-config"
+        }
+    ]
+}
