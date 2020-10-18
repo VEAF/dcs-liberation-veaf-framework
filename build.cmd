@@ -27,6 +27,28 @@ set SECURITY_DISABLED_FLAG=false
 :DontDefineDefaultSECURITY_DISABLED_FLAG
 echo current value is "%SECURITY_DISABLED_FLAG%"
 
+echo ----------------------------------------
+echo SEVENZIP (a string) points to the 7za executable
+echo defaults "7za", so it needs to be in the path
+IF ["%SEVENZIP%"] == [""] GOTO DefineDefaultSEVENZIP
+goto DontDefineDefaultSEVENZIP
+:DefineDefaultSEVENZIP
+set SEVENZIP=7za
+:DontDefineDefaultSEVENZIP
+echo current value is "%SEVENZIP%"
+
+echo ----------------------------------------
+echo DISTRIBUTION_ARCHIVE_SUFFIX (a string) will be appended to the distibution archive file name to make it more unique
+echo defaults to the current iso date
+IF [%DISTRIBUTION_ARCHIVE_SUFFIX%] == [] GOTO DefineDefaultDISTRIBUTION_ARCHIVE_SUFFIX
+goto DontDefineDefaultDISTRIBUTION_ARCHIVE_SUFFIX
+:DefineDefaultDISTRIBUTION_ARCHIVE_SUFFIX
+set TIMEBUILD=%TIME: =0%
+set DISTRIBUTION_ARCHIVE_SUFFIX=%date:~-4,4%%date:~-7,2%%date:~-10,2%
+:DontDefineDefaultDISTRIBUTION_ARCHIVE_SUFFIX
+set DISTRIBUTION_ARCHIVE=dcs-liberation-veafplugin_%DISTRIBUTION_ARCHIVE_SUFFIX%
+echo current value is "%DISTRIBUTION_ARCHIVE_SUFFIX%"
+
 echo.
 echo prepare the folders
 rd /s /q .\build >nul 2>&1
@@ -70,6 +92,9 @@ del /f /q dist\VeafDynamicLoader.lua >nul 2>&1
 del /f /q dist\veafMissionEditor.lua >nul 2>&1
 del /f /q dist\veafMissionNormalizer.lua >nul 2>&1
 del /f /q dist\veafMissionRadioPresetsEditor.lua >nul 2>&1
+
+rem -- build distribution archive
+"%SEVENZIP%" a -r -tzip %DISTRIBUTION_ARCHIVE%.zip .\dist\* >nul 2>&1
 
 rem -- cleanup 
 rd /s /q .\build >nul 2>&1
