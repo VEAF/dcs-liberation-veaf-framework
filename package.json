@@ -10,6 +10,6 @@
     "url": "git+https://github.com/veaf/dcs-liberation-veaf-framework.git"
   },
   "dependencies": {
-    "veaf-mission-creation-tools": "2.23.0"
+    "veaf-mission-creation-tools": "2.38.1"
   }
 }

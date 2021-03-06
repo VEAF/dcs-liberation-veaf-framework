@@ -8,6 +8,16 @@ echo.
 rem -- default options values
 echo This script can use these environment variables to customize its behavior :
 echo ----------------------------------------
+echo NOPAUSE if set to "true", will not pause at the end of the script (useful to chain calls to this script)
+echo defaults to "false"
+IF [%NOPAUSE%] == [] GOTO DefineDefaultNOPAUSE
+goto DontDefineDefaultNOPAUSE
+:DefineDefaultNOPAUSE
+set NOPAUSE=false
+:DontDefineDefaultNOPAUSE
+echo current value is "%NOPAUSE%"
+
+echo ----------------------------------------
 echo VERBOSE_LOG_FLAG if set to "true", will create a mission with tracing enabled (meaning that, when run, it will log a lot of details in the dcs log file)
 echo defaults to "false"
 IF [%VERBOSE_LOG_FLAG%] == [] GOTO DefineDefaultVERBOSE_LOG_FLAG
@@ -16,6 +26,16 @@ goto DontDefineDefaultVERBOSE_LOG_FLAG
 set VERBOSE_LOG_FLAG=false
 :DontDefineDefaultVERBOSE_LOG_FLAG
 echo current value is "%VERBOSE_LOG_FLAG%"
+
+echo ----------------------------------------
+echo LUA_SCRIPTS_DEBUG_PARAMETER can be set to "-debug" or "-trace" (or not set) ; this will be passed to the lua helper scripts (e.g. veafMissionRadioPresetsEditor and veafMissionNormalizer)
+echo defaults to not set
+IF [%LUA_SCRIPTS_DEBUG_PARAMETER%] == [] GOTO DefineDefaultLUA_SCRIPTS_DEBUG_PARAMETER
+goto DontDefineDefaultLUA_SCRIPTS_DEBUG_PARAMETER
+:DefineDefaultLUA_SCRIPTS_DEBUG_PARAMETER
+set LUA_SCRIPTS_DEBUG_PARAMETER=
+:DontDefineDefaultLUA_SCRIPTS_DEBUG_PARAMETER
+echo current value is "%LUA_SCRIPTS_DEBUG_PARAMETER%"
 
 echo ----------------------------------------
 echo SECURITY_DISABLED_FLAG if set to "true", will create a mission with security disabled (meaning that no password is ever required)
@@ -38,6 +58,34 @@ set SEVENZIP=7za
 echo current value is "%SEVENZIP%"
 
 echo ----------------------------------------
+echo LUA (a string) points to the lua executable
+echo defaults "lua", so it needs to be in the path
+IF ["%LUA%"] == [""] GOTO DefineDefaultLUA
+goto DontDefineDefaultLUA
+:DefineDefaultLUA
+set LUA=lua
+:DontDefineDefaultLUA
+echo current value is "%LUA%"
+
+echo ----------------------------------------
+echo DYNAMIC_MISSION_PATH (a string) points to folder where this mission is located
+echo defaults this folder
+IF ["%DYNAMIC_MISSION_PATH%"] == [""] GOTO DefineDefaultDYNAMIC_MISSION_PATH
+goto DontDefineDefaultDYNAMIC_MISSION_PATH
+:DefineDefaultDYNAMIC_MISSION_PATH
+set DYNAMIC_MISSION_PATH=%~dp0
+:DontDefineDefaultDYNAMIC_MISSION_PATH
+echo current value is "%DYNAMIC_MISSION_PATH%"
+
+echo ----------------------------------------
+echo DYNAMIC_SCRIPTS_PATH (a string) points to folder where the VEAF-mission-creation-tools are located
+echo defaults this folder
+IF ["%DYNAMIC_SCRIPTS_PATH%"] == [""] GOTO DefineDefaultDYNAMIC_SCRIPTS_PATH
+goto DontDefineDefaultDYNAMIC_SCRIPTS_PATH
+:DefineDefaultDYNAMIC_SCRIPTS_PATH
+set DYNAMIC_SCRIPTS_PATH=%~dp0node_modules\veaf-mission-creation-tools\
+:DontDefineDefaultDYNAMIC_SCRIPTS_PATH
+echo current value is "%DYNAMIC_SCRIPTS_PATH%"
 echo DISTRIBUTION_ARCHIVE_SUFFIX (a string) will be appended to the distibution archive file name to make it more unique
 echo defaults to the current iso date
 IF [%DISTRIBUTION_ARCHIVE_SUFFIX%] == [] GOTO DefineDefaultDISTRIBUTION_ARCHIVE_SUFFIX
@@ -68,13 +116,13 @@ xcopy /s /y /e .\node_modules\veaf-mission-creation-tools\src\scripts\* .\build\
 
 rem -- set the flags in the scripts according to the options
 echo set the flags in the scripts according to the options
-powershell -Command "(gc .\build\tempscripts\veaf\veaf.lua) -replace 'veaf.Development = false', 'veaf.Development = %VERBOSE_LOG_FLAG%' | sc .\build\tempscripts\veaf\veaf.lua" >nul 2>&1
-powershell -Command "(gc .\build\tempscripts\veaf\veaf.lua) -replace 'veaf.SecurityDisabled = false', 'veaf.SecurityDisabled = %SECURITY_DISABLED_FLAG%' | sc .\build\tempscripts\veaf\veaf.lua" >nul 2>&1
+powershell -File replace.ps1 .\build\tempscripts\veaf\veaf.lua "veaf.Development = (true|false)" "veaf.Development = %VERBOSE_LOG_FLAG%" >nul 2>&1
+powershell -File replace.ps1 .\build\tempscripts\veaf\veaf.lua "veaf.SecurityDisabled = (true|false)" "veaf.SecurityDisabled = %SECURITY_DISABLED_FLAG%" >nul 2>&1
 
 if %VERBOSE_LOG_FLAG%==false (
 	rem -- comment all the trace and debug code
 	echo comment all the trace and debug code
-	FOR %%f IN (.\build\tempscripts\veaf\*.lua) DO powershell -Command "(gc %%f) -replace '(^\s*)(veaf.*\.[^\(^\s]*log(Trace|Debug))', '$1--$2' | sc %%f" >nul 2>&1
+	FOR %%f IN (.\build\tempscripts\veaf\*.lua) DO powershell -File replace.ps1 %%f "(^\s*)(veaf.*\.[^\(^\s]*log(Trace|Debug|Marker))" "$1--$2" >nul 2>&1
 )
 
 rem -- copy all the scripts
@@ -104,5 +152,8 @@ echo ----------------------------------------
 rem -- done !
 echo Done !
 echo ----------------------------------------
+echo.
 
+IF [%NOPAUSE%] == [true] GOTO EndOfFile
 pause
+:EndOfFile
