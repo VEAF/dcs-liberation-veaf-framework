@@ -3,3 +3,4 @@ dist/
 build/
 build-*.cmd
 dcs-liberation-veafplugin_*.zip
+package-lock.json
