@@ -84,6 +84,7 @@ IF ["%DYNAMIC_SCRIPTS_PATH%"] == [""] GOTO DefineDefaultDYNAMIC_SCRIPTS_PATH
 goto DontDefineDefaultDYNAMIC_SCRIPTS_PATH
 :DefineDefaultDYNAMIC_SCRIPTS_PATH
 set DYNAMIC_SCRIPTS_PATH=%~dp0node_modules\veaf-mission-creation-tools\
+set NPM_UPDATE=true
 :DontDefineDefaultDYNAMIC_SCRIPTS_PATH
 echo current value is "%DYNAMIC_SCRIPTS_PATH%"
 echo DISTRIBUTION_ARCHIVE_SUFFIX (a string) will be appended to the distibution archive file name to make it more unique
@@ -105,14 +106,19 @@ rd /s /q .\dist >nul 2>&1
 mkdir .\dist >nul 2>&1
 
 echo.
+IF ["%NPM_UPDATE%"] == [""] GOTO DontNPM_UPDATE
 echo fetch the veaf-mission-creation-tools package
 call npm update
-rem echo on
+goto DoNPM_UPDATE
+:DontNPM_UPDATE
+echo skipping npm update
+:DoNPM_UPDATE
+rem echo on 
 
 echo.
 echo prepare the veaf-mission-creation-tools scripts
 rem -- copy the scripts folder
-xcopy /s /y /e .\node_modules\veaf-mission-creation-tools\src\scripts\* .\build\tempscripts\ >nul 2>&1
+xcopy /s /y /e %DYNAMIC_SCRIPTS_PATH%\src\scripts\* .\build\tempscripts\ >nul 2>&1
 
 rem -- set the flags in the scripts according to the options
 echo set the flags in the scripts according to the options
@@ -133,6 +139,8 @@ xcopy /Y .\src\* dist\ >nul 2>&1
 	
 rem -- remove unwanted scripts
 del /f /q dist\autogft-1_12.lua >nul 2>&1
+del /f /q dist\Hercules_Cargo.lua >nul 2>&1
+del /f /q dist\skynet-iads-compiled.lua >nul 2>&1
 del /f /q dist\dcsDataExport.lua >nul 2>&1
 del /f /q dist\NIOD.lua >nul 2>&1
 del /f /q dist\veafCarrierOperations2.lua >nul 2>&1
@@ -140,6 +148,13 @@ del /f /q dist\VeafDynamicLoader.lua >nul 2>&1
 del /f /q dist\veafMissionEditor.lua >nul 2>&1
 del /f /q dist\veafMissionNormalizer.lua >nul 2>&1
 del /f /q dist\veafMissionRadioPresetsEditor.lua >nul 2>&1
+del /f /q dist\veafMissionTriggerInjector.lua >nul 2>&1
+del /f /q dist\veafSkynetIadsHelper.lua >nul 2>&1
+del /f /q dist\veafGrass.lua >nul 2>&1
+del /f /q dist\veafCombatMission.lua >nul 2>&1
+del /f /q dist\veafCombatZone.lua >nul 2>&1
+del /f /q dist\veafSanctuary.lua >nul 2>&1
+
 
 rem -- build distribution archive
 "%SEVENZIP%" a -r -tzip %DISTRIBUTION_ARCHIVE%.zip .\dist\* >nul 2>&1

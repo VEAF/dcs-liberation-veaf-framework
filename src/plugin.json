@@ -30,16 +30,20 @@
             "mnemonic": "mist"
         },
         {
-            "file":     "Moose.lua",
-            "mnemonic": "moose"
-        },
-        {
             "file":     "CTLD.lua",
             "mnemonic": "ctld"
         },
         {
             "file":     "WeatherMark.lua",
             "mnemonic": "weathermark"
+        },
+        {
+            "file":     "DCS-SimpleTextToSpeech.lua",
+            "mnemonic": "DCS-SimpleTextToSpeech"
+        },
+        {
+            "file":     "HoundElint.lua",
+            "mnemonic": "HoundElint"
         },
         {
             "file":     "veaf.lua",
@@ -60,22 +64,6 @@
         {
             "file":     "veafCasMission.lua",
             "mnemonic": "veafcasmission"
-        },
-        {
-            "file":     "veafCombatMission.lua",
-            "mnemonic": "veafcombatmission"
-        },
-        {
-            "file":     "veafCombatZone.lua",
-            "mnemonic": "veafcombatzone"
-        },
-        {
-            "file":     "veafGrass.lua",
-            "mnemonic": "veafgrass"
-        },
-        {
-            "file":     "veafInterpreter.lua",
-            "mnemonic": "veafinterpreter"
         },
         {
             "file":     "veafMarkers.lua",
@@ -116,6 +104,10 @@
         {
             "file":     "veafUnits.lua",
             "mnemonic": "veafunits"
+        },
+        {
+            "file":     "veafHoundElintHelper.lua",
+            "mnemonic": "veafHoundElintHelper"
         }
     ],
     "configurationWorkOrders": [
