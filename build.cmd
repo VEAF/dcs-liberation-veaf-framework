@@ -108,7 +108,7 @@ mkdir .\dist >nul 2>&1
 echo.
 IF ["%NPM_UPDATE%"] == [""] GOTO DontNPM_UPDATE
 echo fetch the veaf-mission-creation-tools package
-call npm update
+call yarn install
 goto DoNPM_UPDATE
 :DontNPM_UPDATE
 echo skipping npm update
