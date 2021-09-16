@@ -17,6 +17,16 @@
             "nameInUI": "Allow CTLD transport missions",
             "mnemonic": "allowCTLD",
             "defaultValue": false
+        },
+        {
+            "nameInUI": "Activate Skynet IADS",
+            "mnemonic": "allowSkynet",
+            "defaultValue": false
+        },
+        {
+            "nameInUI": "Activate Hound Elint",
+            "mnemonic": "allowHoundElint",
+            "defaultValue": false
         }
     ],
     "scriptsWorkOrders": [
@@ -30,6 +40,10 @@
             "mnemonic": "mist"
         },
         {
+            "file":     "DCS-SimpleTextToSpeech.lua",
+            "mnemonic": "DCS-SimpleTextToSpeech"
+        },
+        {
             "file":     "CTLD.lua",
             "mnemonic": "ctld"
         },
@@ -38,77 +52,105 @@
             "mnemonic": "weathermark"
         },
         {
-            "file":     "DCS-SimpleTextToSpeech.lua",
-            "mnemonic": "DCS-SimpleTextToSpeech"
+            "file":     "skynet-iads-compiled.lua",
+            "mnemonic": "skynet"
+        },
+        {
+            "file":     "Hercules_cargo.lua",
+            "mnemonic": "herculesCargo"
         },
         {
             "file":     "HoundElint.lua",
             "mnemonic": "HoundElint"
         },
         {
-            "file":     "veaf.lua",
+            "file": "veaf.lua",
             "mnemonic": "veaf"
         },
         {
-            "file":     "dcsUnits.lua",
-            "mnemonic": "dcsunits"
+            "file": "veafAssets.lua",
+            "mnemonic": "veafAssets"
         },
         {
-            "file":     "veafAssets.lua",
-            "mnemonic": "veafassets"
+            "file": "veafCarrierOperations.lua",
+            "mnemonic": "veafCarrierOperations"
         },
         {
-            "file":     "veafCarrierOperations.lua",
-            "mnemonic": "veafcarrieroperations"
+            "file": "veafCasMission.lua",
+            "mnemonic": "veafCasMission"
         },
         {
-            "file":     "veafCasMission.lua",
-            "mnemonic": "veafcasmission"
+            "file": "veafCombatMission.lua",
+            "mnemonic": "veafCombatMission"
         },
         {
-            "file":     "veafMarkers.lua",
-            "mnemonic": "veafmarkers"
+            "file": "veafCombatZone.lua",
+            "mnemonic": "veafCombatZone"
         },
         {
-            "file":     "veafMove.lua",
-            "mnemonic": "veafmove"
+            "file": "veafGrass.lua",
+            "mnemonic": "veafGrass"
         },
         {
-            "file":     "veafNamedPoints.lua",
-            "mnemonic": "veafnamedpoints"
+            "file": "veafInterpreter.lua",
+            "mnemonic": "veafInterpreter"
         },
         {
-            "file":     "veafRadio.lua",
-            "mnemonic": "veafradio"
+            "file": "veafMarkers.lua",
+            "mnemonic": "veafMarkers"
         },
         {
-            "file":     "veafRemote.lua",
-            "mnemonic": "veafremote"
+            "file": "veafMove.lua",
+            "mnemonic": "veafMove"
         },
         {
-            "file":     "veafSecurity.lua",
-            "mnemonic": "veafsecurity"
+            "file": "veafNamedPoints.lua",
+            "mnemonic": "veafNamedPoints"
         },
         {
-            "file":     "veafShortcuts.lua",
-            "mnemonic": "veafshortcuts"
+            "file": "veafRadio.lua",
+            "mnemonic": "veafRadio"
         },
         {
-            "file":     "veafSpawn.lua",
-            "mnemonic": "veafspawn"
+            "file": "veafSecurity.lua",
+            "mnemonic": "veafSecurity"
         },
         {
-            "file":     "veafTransportMission.lua",
-            "mnemonic": "veaftransportmission"
+            "file": "veafShortcuts.lua",
+            "mnemonic": "veafShortcuts"
         },
         {
-            "file":     "veafUnits.lua",
-            "mnemonic": "veafunits"
+            "file": "veafSpawn.lua",
+            "mnemonic": "veafSpawn"
         },
         {
-            "file":     "veafHoundElintHelper.lua",
+            "file": "veafTransportMission.lua",
+            "mnemonic": "veafTransportMission"
+        },
+        {
+            "file": "dcsUnits.lua",
+            "mnemonic": "dcsUnits"
+        },
+        {
+            "file": "veafUnits.lua",
+            "mnemonic": "veafUnits"
+        },
+        {
+            "file": "veafRemote.lua",
+            "mnemonic": "veafRemote"
+        },
+        {
+            "file": "veafSkynetIadsHelper.lua",
+            "mnemonic": "veafSkynetIadsHelper"
+        },
+        {
+            "file": "veafSanctuary.lua",
+            "mnemonic": "veafSanctuary"
+        },
+        {
+            "file": "veafHoundElintHelper.lua",
             "mnemonic": "veafHoundElintHelper"
-        }
+        }        
     ],
     "configurationWorkOrders": [
         {

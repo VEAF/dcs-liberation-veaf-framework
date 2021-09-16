@@ -1,6 +1,6 @@
 {
   "name": "dcs-liberation-veaf-framework",
-  "version": "1.0.0",
+  "version": "4.21.0",
   "description": "VEAF Scripts as a plugin to dcs-liberation",
   "main": "",
   "author": "Mitch, Zip",
@@ -10,6 +10,6 @@
     "url": "git+https://github.com/veaf/dcs-liberation-veaf-framework.git"
   },
   "dependencies": {
-    "veaf-mission-creation-tools": "3.8.x"
+    "veaf-mission-creation-tools": "^4.21.0"
   }
 }

@@ -87,6 +87,48 @@ set DYNAMIC_SCRIPTS_PATH=%~dp0node_modules\veaf-mission-creation-tools\
 set NPM_UPDATE=true
 :DontDefineDefaultDYNAMIC_SCRIPTS_PATH
 echo current value is "%DYNAMIC_SCRIPTS_PATH%"
+
+echo ----------------------------------------
+echo DYNAMIC_LOAD_SCRIPTS if set to "true", will create a mission with all the scripts loaded dynamically by default
+echo defaults to "false"
+IF [%DYNAMIC_LOAD_SCRIPTS%] == [] GOTO DefineDefaultDYNAMIC_LOAD_SCRIPTS
+goto DontDefineDefaultDYNAMIC_LOAD_SCRIPTS
+:DefineDefaultDYNAMIC_LOAD_SCRIPTS
+set DYNAMIC_LOAD_SCRIPTS=false
+:DontDefineDefaultDYNAMIC_LOAD_SCRIPTS
+echo current value is "%DYNAMIC_LOAD_SCRIPTS%"
+
+echo ----------------------------------------
+echo MISSION_FILE_SUFFIX1 (a string) will be appended to the mission file name to make it more unique
+echo defaults to empty
+IF [%MISSION_FILE_SUFFIX1%] == [] GOTO DefineDefaultMISSION_FILE_SUFFIX1
+goto DontDefineDefaultMISSION_FILE_SUFFIX1
+:DefineDefaultMISSION_FILE_SUFFIX1
+set MISSION_FILE_SUFFIX1=
+:DontDefineDefaultMISSION_FILE_SUFFIX1
+echo current value is "%MISSION_FILE_SUFFIX1%"
+
+echo ----------------------------------------
+echo MISSION_FILE_SUFFIX2 (a string) will be appended to the mission file name to make it more unique
+echo defaults to the current iso date
+IF [%MISSION_FILE_SUFFIX2%] == [] GOTO DefineDefaultMISSION_FILE_SUFFIX2
+goto DontDefineDefaultMISSION_FILE_SUFFIX2
+:DefineDefaultMISSION_FILE_SUFFIX2
+set TIMEBUILD=%TIME: =0%
+set MISSION_FILE_SUFFIX2=%date:~-4,4%%date:~-7,2%%date:~-10,2%
+:DontDefineDefaultMISSION_FILE_SUFFIX2
+echo current value is "%MISSION_FILE_SUFFIX2%"
+
+echo ----------------------------------------
+echo MISSION_FILE_SUFFIX1 (a string) will be appended to the mission file name to make it more unique
+echo defaults to empty
+IF [%MISSION_FILE_SUFFIX1%] == [] GOTO DontUseSuffix1
+set MISSION_FILE=.\build\%MISSION_NAME%_%MISSION_FILE_SUFFIX1%_%MISSION_FILE_SUFFIX2%
+goto EndOfSuffix1
+:DontUseSuffix1
+set MISSION_FILE=.\build\%MISSION_NAME%_%MISSION_FILE_SUFFIX2%
+:EndOfSuffix1
+
 echo DISTRIBUTION_ARCHIVE_SUFFIX (a string) will be appended to the distibution archive file name to make it more unique
 echo defaults to the current iso date
 IF [%DISTRIBUTION_ARCHIVE_SUFFIX%] == [] GOTO DefineDefaultDISTRIBUTION_ARCHIVE_SUFFIX
@@ -107,13 +149,16 @@ mkdir .\dist >nul 2>&1
 
 echo.
 IF ["%NPM_UPDATE%"] == [""] GOTO DontNPM_UPDATE
-echo fetch the veaf-mission-creation-tools package
-call yarn install
+echo fetching the veaf-mission-creation-tools package
+if exist yarn.lock (
+	call yarn upgrade
+) else (
+	call yarn install
+)
 goto DoNPM_UPDATE
 :DontNPM_UPDATE
 echo skipping npm update
 :DoNPM_UPDATE
-rem echo on 
 
 echo.
 echo prepare the veaf-mission-creation-tools scripts
@@ -128,7 +173,7 @@ powershell -File replace.ps1 .\build\tempscripts\veaf\veaf.lua "veaf.SecurityDis
 if %VERBOSE_LOG_FLAG%==false (
 	rem -- comment all the trace and debug code
 	echo comment all the trace and debug code
-	FOR %%f IN (.\build\tempscripts\veaf\*.lua) DO powershell -File replace.ps1 %%f "(^\s*)(veaf.*\.[^\(^\s]*log(Trace|Debug|Marker))" "$1--$2" >nul 2>&1
+	FOR %%f IN (.\build\tempscripts\veaf\*.lua) DO powershell -File replace.ps1 %%f "(^\s*)(.*veaf\.loggers.get\(.*\):(trace|debug|marker|cleanupMarkers))" "$1--$2" >nul 2>&1
 )
 
 rem -- copy all the scripts
@@ -138,23 +183,15 @@ xcopy /Y .\build\tempscripts\veaf dist\ >nul 2>&1
 xcopy /Y .\src\* dist\ >nul 2>&1
 	
 rem -- remove unwanted scripts
-del /f /q dist\autogft-1_12.lua >nul 2>&1
-del /f /q dist\Hercules_Cargo.lua >nul 2>&1
-del /f /q dist\skynet-iads-compiled.lua >nul 2>&1
 del /f /q dist\dcsDataExport.lua >nul 2>&1
 del /f /q dist\NIOD.lua >nul 2>&1
-del /f /q dist\veafCarrierOperations2.lua >nul 2>&1
 del /f /q dist\VeafDynamicLoader.lua >nul 2>&1
 del /f /q dist\veafMissionEditor.lua >nul 2>&1
 del /f /q dist\veafMissionNormalizer.lua >nul 2>&1
 del /f /q dist\veafMissionRadioPresetsEditor.lua >nul 2>&1
 del /f /q dist\veafMissionTriggerInjector.lua >nul 2>&1
-del /f /q dist\veafSkynetIadsHelper.lua >nul 2>&1
-del /f /q dist\veafGrass.lua >nul 2>&1
-del /f /q dist\veafCombatMission.lua >nul 2>&1
-del /f /q dist\veafCombatZone.lua >nul 2>&1
-del /f /q dist\veafSanctuary.lua >nul 2>&1
-
+del /f /q dist\veafMissionFlightPlanEditor.lua >nul 2>&1
+del /f /q dist\veafSpawnableAircraftsEditor.lua >nul 2>&1
 
 rem -- build distribution archive
 "%SEVENZIP%" a -r -tzip %DISTRIBUTION_ARCHIVE%.zip .\dist\* >nul 2>&1
